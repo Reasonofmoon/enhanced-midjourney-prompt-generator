@@ -13,6 +13,11 @@ const copyPromptsButton = document.getElementById('copyPrompts');
 const clearAllButton = document.getElementById('clearAll');
 const mainIdeaTextarea = document.getElementById('mainIdea');
 const generatedPromptsDiv = document.getElementById('generatedPrompts');
+const aspectRatioSelect = document.getElementById('aspectRatio');
+const versionSelect = document.getElementById('version');
+const qualitySelect = document.getElementById('quality');
+const stylizeInput = document.getElementById('stylize');
+const chaosInput = document.getElementById('chaos');
 
 // Function to save API key
 function saveApiKey() {
