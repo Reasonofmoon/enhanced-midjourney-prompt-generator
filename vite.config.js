@@ -8,19 +8,19 @@ export default defineConfig({
       '/api/openai': {
         target: 'https://api.openai.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/openai/, '')
+        rewrite: (path) => path.replace(/^\/api\/openai/, ''),
       },
       '/api/anthropic': {
         target: 'https://api.anthropic.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/anthropic/, '')
+        rewrite: (path) => path.replace(/^\/api\/anthropic/, ''),
       },
       '/api/gemini': {
         target: 'https://generativelanguage.googleapis.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/gemini/, '')
-      }
-    }
+        rewrite: (path) => path.replace(/^\/api\/gemini/, ''),
+      },
+    },
   },
   build: {
     outDir: 'dist',
