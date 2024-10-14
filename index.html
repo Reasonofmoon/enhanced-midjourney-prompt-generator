@@ -1,97 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Midjourney Prompt Generator</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Enhanced Midjourney Prompt Generator</h1>
-            <div class="profile">
-                <span id="profileEmoji" class="profile-emoji"></span>
-                <span>by Reasonofmoon</span>
-            </div>
-        </header>
-        <div class="main-content">
-            <div class="input-section">
-                <textarea id="mainIdea" placeholder="Start typing your main idea..."></textarea>
-            </div>
-            <div class="parameters-section">
-                <h2>Parameters</h2>
-                <div class="parameter">
-                    <label for="aspectRatio">Aspect Ratio:</label>
-                    <select id="aspectRatio">
-                        <option value="1:1">1:1</option>
-                        <option value="16:9">16:9</option>
-                        <option value="4:3">4:3</option>
-                        <option value="3:2">3:2</option>
-                    </select>
-                </div>
-                <div class="parameter">
-                    <label for="version">Version:</label>
-                    <select id="version">
-                        <option value="6.1">6.1</option>
-                        <option value="5.2">5.2</option>
-                        <option value="5.1">5.1</option>
-                        <option value="5.0">5.0</option>
-                    </select>
-                </div>
-                <div class="parameter">
-                    <label for="quality">Quality:</label>
-                    <select id="quality">
-                        <option value="0.25">0.25</option>
-                        <option value="0.5">0.5</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                </div>
-                <div class="parameter">
-                    <label for="stylize">Stylize:</label>
-                    <input type="number" id="stylize" min="0" max="1000" value="100">
-                </div>
-                <div class="parameter">
-                    <label for="chaos">Chaos:</label>
-                    <input type="number" id="chaos" min="0" max="100" value="0">
-                </div>
-            </div>
-            <div class="api-key-section">
-                <select id="llmSelect">
-                    <option value="openai">OpenAI</option>
-                    <option value="anthropic">Anthropic</option>
-                    <option value="gemini">Gemini</option>
-                </select>
-                <input type="password" id="apiKey" placeholder="Enter your API key">
-                <button id="saveApiKey">Save API Key</button>
-                <button id="toggleApiVisibility">Show/Hide API Key</button>
-                <button id="clearApiCache">Clear API Cache</button>
-            </div>
-            <div class="output-section">
-                <h2>Generated Prompts</h2>
-                <div id="generatedPrompts"></div>
-            </div>
-            <div class="function-buttons">
-                <button id="generatePrompts">Generate Prompts</button>
-                <button id="copyPrompts">Copy Prompts</button>
-                <button id="clearAll">Clear All</button>
-            </div>
-        </div>
-        <div class="usage-guide">
-            <h3>How to Use</h3>
-            <ol>
-                <li>Select your preferred LLM provider.</li>
-                <li>Enter your API key and save it.</li>
-                <li>Type your main idea in the text area.</li>
-                <li>Adjust the parameters as needed.</li>
-                <li>Click "Generate Prompts" to create Midjourney prompts.</li>
-                <li>Copy the generated prompts or clear all inputs.</li>
-            </ol>
-            <p class="warning">Warning: Keep your API key secure. Never share it publicly.</p>
-        </div>
-    </div>
-    <script type="module" src="script.js"></script>
-</body>
-</html>
+// Import necessary modules
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+
+// Initialize variables
+const apiKeyInput = document.getElementById('apiKey');
+const saveApiKeyButton = document.getElementById('saveApiKey');
+const toggleApiVisibilityButton = document.getElementById('toggleApiVisibility');
+const clearApiCacheButton = document.getElementById('clearApiCache');
+const llmSelect = document.getElementById('llmSelect');
+const generatePromptsButton = document.getElementById('generatePrompts');
+const copyPromptsButton = document.getElementById('copyPrompts');
+const clearAllButton = document.getElementById('clearAll');
+const mainIdeaTextarea = document.getElementById('mainIdea');
+const generatedPromptsDiv = document.getElementById('generatedPrompts');
+
+// Function to save API key
+function saveApiKey() {
+    const apiKey = apiKeyInput.value.trim();
+    const selectedLLM = llmSelect.value;
+
+    if (apiKey) {
+        try {
+            // Save API key to localStorage
+            localStorage.setItem(`${selectedLLM}ApiKey`, apiKey);
+            alert(`${selectedLLM} API 키가 성공적으로 저장되었습니다!`);
+        } catch (error) {
+            console.error('API 키 저장 중 오류 발생:', error);
+            alert('API 키 저장 중 문제가 발생했습니다. 브라우저 설정을 확인하세요.');
+        }
+    } else {
+        alert('유효한 API 키를 입력해 주세요.');
+    }
+}
+
+// Function to toggle API key visibility
+function toggleApiVisibility() {
+    if (apiKeyInput.type === 'password') {
+        apiKeyInput.type = 'text';
+    } else {
+        apiKeyInput.type = 'password';
+    }
+}
+
+// Function to clear API key from localStorage
+function clearApiCache() {
+    const selectedLLM = llmSelect.value;
+    localStorage.removeItem(`${selectedLLM}ApiKey`);
+    apiKeyInput.value = '';
+    alert(`${selectedLLM} API 키 캐시가 성공적으로 삭제되었습니다!`);
+}
+
+// Load saved API key when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const selectedLLM = llmSelect.value;
+    const savedApiKey = localStorage.getItem(`${selectedLLM}ApiKey`);
+    if (savedApiKey) {
+        apiKeyInput.value = savedApiKey;
+        console.log('로드된 API 키:', savedApiKey);
+    }
+});
+
+// Event listeners
+saveApiKeyButton.addEventListener('click', saveApiKey);
+toggleApiVisibilityButton.addEventListener('click', toggleApiVisibility);
+clearApiCacheButton.addEventListener('click', clearApiCache);
+
+llmSelect.addEventListener('change', () => {
+    const selectedLLM = llmSelect.value;
+    const savedApiKey = localStorage.getItem(`${selectedLLM}ApiKey`);
+    apiKeyInput.value = savedApiKey || '';
+});
+
+// Placeholder functions for generating prompts, copying prompts, and clearing inputs
+function generatePrompts() {
+    alert('Prompts are being generated... (기능 구현 필요)');
+}
+
+function copyPrompts() {
+    const promptText = generatedPromptsDiv.innerText;
+    if (promptText) {
+        navigator.clipboard.writeText(promptText).then(() => {
+            alert('Prompts copied to clipboard!');
+        }).catch(err => {
+            console.error('Prompts copy failed:', err);
+            alert('Failed to copy prompts. Please try again.');
+        });
+    } else {
+        alert('No prompts to copy.');
+    }
+}
+
+function clearAll() {
+    mainIdeaTextarea.value = '';
+    generatedPromptsDiv.innerHTML = '';
+    aspectRatioSelect.value = '1:1';
+    versionSelect.value = '6.1';
+    qualitySelect.value = '1';
+    stylizeInput.value = '100';
+    chaosInput.value = '0';
+    llmSelect.value = 'openai';
+    apiKeyInput.value = '';
+}
+
+// Additional event listeners
+generatePromptsButton.addEventListener('click', generatePrompts);
+copyPromptsButton.addEventListener('click', copyPrompts);
+clearAllButton.addEventListener('click', clearAll);
+
+// Initialize tooltips
+tippy('[data-tippy-content]', {
+    theme: 'custom',
+    placement: 'top',
+});

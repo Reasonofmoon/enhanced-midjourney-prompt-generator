@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\김민희\Documents\enhanced-midjourney-prompt-generator\venv
+set VIRTUAL_ENV=C:\Users\reasonofmoon\Documents\midjourney_prompter\enhanced-midjourney-prompt-generator\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
