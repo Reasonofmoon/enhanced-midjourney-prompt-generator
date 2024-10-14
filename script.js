@@ -108,11 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             switch (selectedLLM) {
                 case 'openai':
-                    apiUrl = 'https://api.openai.com/v1/chat/completions'; // 최신 엔드포인트로 변경
+                    apiUrl = 'https://api.openai.com/v1/completions';
                     headers['Authorization'] = `Bearer ${apiKey}`;
                     body = {
-                        model: 'gpt-3.5-turbo', // 최신 지원 모델 사용
-                        messages: [{ role: 'user', content: prompt }],
+                        model: 'text-davinci-003',
+                        prompt: prompt,
                         max_tokens: 300,
                         temperature: 0.7,
                     };
@@ -147,6 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('API 요청 URL:', apiUrl);
             console.log('API 요청 본문:', body);
 
+            // GitHub Pages 환경에 대한 수정: 로컬에서만 작동하게 하고 실제 API 요청을 피하도록
+            if (window.location.hostname.includes('github.io')) {
+                alert('GitHub Pages 환경에서는 API 요청이 지원되지 않습니다. 로컬 환경에서 실행해 주세요.');
+                return;
+            }
+
             // API 요청 보내기 및 여러 모델에 대해 향상된 프롬프트 생성
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -164,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let generatedText = '';
 
             if (selectedLLM === 'openai') {
-                generatedText = data.choices.map(choice => choice.message.content).join('\n');
+                generatedText = data.choices.map(choice => choice.text).join('\n');
             } else if (selectedLLM === 'anthropic') {
                 generatedText = data.completion;
             } else if (selectedLLM === 'gemini') {
