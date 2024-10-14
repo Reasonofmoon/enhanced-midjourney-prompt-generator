@@ -1,0 +1,18 @@
+{
+    "name": "enhanced-midjourney-prompt-generator",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "deploy": "npm run build && git add dist -f && git commit -m 'Deploy to GitHub Pages' && git subtree push --prefix dist origin gh-pages"
+    },
+    "dependencies": {
+      "tippy.js": "^6.3.7"
+    },
+    "devDependencies": {
+      "vite": "^4.3.9"
+    }
+  }
