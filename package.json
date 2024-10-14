@@ -2,7 +2,7 @@
     "name": "enhanced-midjourney-prompt-generator",
     "private": true,
     "version": "1.0.0",
-    "type": "module",
+    "type": "commonjs",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.8",
+        "node-fetch": "^3.3.2",
         "tippy.js": "^6.3.7"
     },
     "devDependencies": {

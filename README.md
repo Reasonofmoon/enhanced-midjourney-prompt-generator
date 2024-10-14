@@ -78,6 +78,42 @@ Netlify supports server-side functions, which can be used to store API keys secu
 3. **Move API Request Code to Serverless Functions**
    - Create a `netlify/functions` folder and move the API request logic into serverless functions to handle API keys securely.
 
+   Example serverless function (`netlify/functions/openai-prompt.js`):
+   ```javascript
+   const fetch = require('node-fetch');
+
+   exports.handler = async (event) => {
+     const { prompt } = JSON.parse(event.body);
+
+     try {
+       const response = await fetch('https://api.openai.com/v1/completions', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+         },
+         body: JSON.stringify({
+           model: 'text-davinci-003',
+           prompt: prompt,
+           max_tokens: 300,
+           temperature: 0.7,
+         }),
+       });
+
+       const data = await response.json();
+       return {
+         statusCode: 200,
+         body: JSON.stringify(data),
+       };
+     } catch (error) {
+       return {
+         statusCode: 500,
+         body: JSON.stringify({ error: 'Failed to fetch response from OpenAI API' }),
+       };
+     }
+   };
+   ```
+
 ## Technologies Used
 
 - HTML5
