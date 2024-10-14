@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Midjourney Prompt Generator</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/enhanced-midjourney-prompt-generator/assets/index-0b486589.js"></script>
+  <link rel="stylesheet" href="/enhanced-midjourney-prompt-generator/assets/index-67f078f3.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Enhanced Midjourney Prompt Generator</h1>
+            <div class="profile">
+                <span id="profileEmoji" class="profile-emoji"></span>
+                <span>by Reasonofmoon</span>
+            </div>
+        </header>
+        <div class="main-content">
+            <div class="input-section">
+                <textarea id="mainIdea" placeholder="Start typing your main idea..."></textarea>
+            </div>
+            <div class="parameters-section">
+                <h2>Parameters</h2>
+                <div class="parameter">
+                    <label for="aspectRatio">Aspect Ratio:</label>
+                    <select id="aspectRatio">
+                        <option value="1:1">1:1</option>
+                        <option value="16:9">16:9</option>
+                        <option value="4:3">4:3</option>
+                        <option value="3:2">3:2</option>
+                    </select>
+                </div>
+                <div class="parameter">
+                    <label for="version">Version:</label>
+                    <select id="version">
+                        <option value="6.1">6.1</option>
+                        <option value="5.2">5.2</option>
+                        <option value="5.1">5.1</option>
+                        <option value="5.0">5.0</option>
+                    </select>
+                </div>
+                <div class="parameter">
+                    <label for="quality">Quality:</label>
+                    <select id="quality">
+                        <option value="0.25">0.25</option>
+                        <option value="0.5">0.5</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <div class="parameter">
+                    <label for="stylize">Stylize:</label>
+                    <input type="number" id="stylize" min="0" max="1000" value="100">
+                </div>
+                <div class="parameter">
+                    <label for="chaos">Chaos:</label>
+                    <input type="number" id="chaos" min="0" max="100" value="0">
+                </div>
+            </div>
+            <div class="api-key-section">
+                <select id="llmSelect">
+                    <option value="openai">OpenAI</option>
+                    <option value="anthropic">Anthropic</option>
+                    <option value="gemini">Gemini</option>
+                </select>
+                <input type="password" id="apiKey" placeholder="Enter your API key">
+                <button id="saveApiKey">Save API Key</button>
+                <button id="toggleApiVisibility">Show/Hide API Key</button>
+                <button id="clearApiCache">Clear API Cache</button>
+            </div>
+            <div class="output-section">
+                <h2>Generated Prompts</h2>
+                <div id="generatedPrompts"></div>
+            </div>
+            <div class="function-buttons">
+                <button id="generatePrompts">Generate Prompts</button>
+                <button id="copyPrompts">Copy Prompts</button>
+                <button id="clearAll">Clear All</button>
+            </div>
+        </div>
+        <div class="usage-guide">
+            <h3>How to Use</h3>
+            <ol>
+                <li>Select your preferred LLM provider.</li>
+                <li>Enter your API key and save it.</li>
+                <li>Type your main idea in the text area.</li>
+                <li>Adjust the parameters as needed.</li>
+                <li>Click "Generate Prompts" to create Midjourney prompts.</li>
+                <li>Copy the generated prompts or clear all inputs.</li>
+            </ol>
+            <p class="warning">Warning: Keep your API key secure. Never share it publicly.</p>
+        </div>
+    </div>
+    
+</body>
+</html>
